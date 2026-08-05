@@ -1,1 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
+    <title>KannadaKali - Missing Word</title>
+
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+    <main class="game">
+
+        <h1>ಕನ್ನಡ ಕಲಿ 🪶</h1>
+
+        <h2>Complete the sentence</h2>
+
+        <p>Drag the correct word into the blank.</p>
+
+        <div class="sentence">
+            Spider-Man
+            <span
+                id="drop-zone"
+                class="drop-zone">
+                ______
+            </span>
+            ಹೋದನು?
+        </div>
+
+        <div class="word-bank">
+
+            <div class="word" draggable="true">ಯಾರು</div>
+            <div class="word" draggable="true">ಎಲ್ಲಿ</div>
+            <div class="word" draggable="true">ಏಕೆ</div>
+            <div class="word" draggable="true">ಯಾವಾಗ</div>
+
+        </div>
+
+        <p id="feedback"></p>
+
+    </main>
+
+    <script src="script.js"></script>
+
+</body>
+</html>
