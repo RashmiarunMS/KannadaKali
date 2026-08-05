@@ -2,27 +2,27 @@ const questions = [
     {
         before: "Spider-Man",
         after: "ಹೋದನು?",
-        answer: "ಎಲ್ಲಿಗೆ"
+        answers: ["ಎಲ್ಲಿಗೆ", "ಯಾವಾಗ", "ಏಕೆ"]
     },
     {
         before: "ನಿನ್ನ ಗೆಳೆಯ",
         after: "?",
-        answer: "ಯಾರು"
+        answers: ["ಯಾರು"]
     },
     {
         before: "ನೀನು",
         after: "ನಗುತ್ತಿದ್ದೀಯ?",
-        answer: "ಏಕೆ"
+        answers: ["ಏಕೆ"]
     },
     {
         before: "ನೀನು ಶಾಲೆಗೆ",
         after: "ಹೋಗುತ್ತೀಯ?",
-        answer: "ಯಾವಾಗ"
+        answers: ["ಏಕೆ", "ಯಾವಾಗ"]
     },
     {
         before: "ನೀನು",
         after: "ತಿಂಡಿ ತಿಂದೆ?",
-        answer: "ಏನು"
+        answers: ["ಏಕೆ", "ಏನು", "ಯಾವಾಗ"]
     }
 ];
 
@@ -39,7 +39,9 @@ const positiveMessages = [
 
 let currentQuestion = 0;
 let draggedWord = "";
-
+let attemptsForCurrentQuestion = 0;
+let firstTryCorrect = 0;
+let extraAttempts = 0;
 
 // Get elements from HTML
 const words = document.querySelectorAll(".word");
@@ -65,6 +67,8 @@ const progress =
 
 // Display the current question
 function showQuestion() {
+
+    attemptsForCurrentQuestion = 0;
 
     const question = questions[currentQuestion];
 
@@ -100,6 +104,7 @@ words.forEach(word => {
 dropZone.addEventListener("dragover", function (event) {
 
     event.preventDefault();
+    attemptsForCurrentQuestion++;
 
 });
 
@@ -109,12 +114,13 @@ dropZone.addEventListener("drop", function (event) {
 
     event.preventDefault();
 
-    const correctAnswer =
-        questions[currentQuestion].answer;
+    const correctAnswers =
+    questions[currentQuestion].answers;
 
 
-    if (draggedWord === correctAnswer) {
+    if (correctAnswers.includes(draggedWord)) {
 
+        firstTryCorrect++;
         dropZone.textContent = draggedWord;
 
         // Pick a random praise message
@@ -129,6 +135,7 @@ dropZone.addEventListener("drop", function (event) {
 
     } else {
 
+        extraAttempts++;
         feedback.textContent =
             "😊 ಇನ್ನೊಮ್ಮೆ ಪ್ರಯತ್ನಿಸು";
 
@@ -146,10 +153,34 @@ nextButton.addEventListener("click", function () {
 
         showQuestion();
 
+    } else {
+
+        showResults();
+
     }
 
 });
 
+function showResults() {
 
+    document.querySelector(".sentence").style.display = "none";
+    document.querySelector(".word-bank").style.display = "none";
+
+    nextButton.hidden = true;
+
+    progress.textContent = "";
+
+    feedback.innerHTML = `
+        🎉 ಅದ್ಭುತ! ಆಟ ಮುಗಿಯಿತು! 🎉
+        <br><br>
+        ಎಲ್ಲಾ ${questions.length} ಪ್ರಶ್ನೆಗಳನ್ನು ಪೂರ್ಣಗೊಳಿಸಿದ್ದೀರಿ!
+        <br><br>
+        ⭐ ಮೊದಲ ಪ್ರಯತ್ನದಲ್ಲೇ ಸರಿಯಾದ ಉತ್ತರ:
+        ${firstTryCorrect} / ${questions.length}
+        <br>
+        🔄 ಹೆಚ್ಚುವರಿ ಪ್ರಯತ್ನಗಳು:
+        ${extraAttempts}
+    `;
+}
 // Start the game
 showQuestion();
