@@ -19,26 +19,31 @@
 
         <p>Drag the correct word into the blank.</p>
 
-        <div class="sentence">
-            Spider-Man
-            <span
-                id="drop-zone"
-                class="drop-zone">
-                ______
-            </span>
-            ಹೋದನು?
-        </div>
+<div class="sentence">
+    <span id="sentence-before"></span>
 
+    <span id="drop-zone" class="drop-zone">
+        ______
+    </span>
+
+    <span id="sentence-after"></span>
+</div>
         <div class="word-bank">
 
-            <div class="word" draggable="true">ಯಾರು</div>
-            <div class="word" draggable="true">ಎಲ್ಲಿಗೆ</div>
-            <div class="word" draggable="true">ಏಕೆ</div>
-            <div class="word" draggable="true">ಯಾವಾಗ</div>
+    <div class="word" draggable="true">ಯಾರು</div>
+    <div class="word" draggable="true">ಎಲ್ಲಿಗೆ</div>
+    <div class="word" draggable="true">ಏಕೆ</div>
+    <div class="word" draggable="true">ಯಾವಾಗ</div>
+    <div class="word" draggable="true">ಏನು</div>
 
-        </div>
+</div>
+<p id="feedback"></p>
 
-        <p id="feedback"></p>
+<p id="progress"></p>
+
+<button id="next-button" hidden>
+    ಮುಂದಿನ ಪ್ರಶ್ನೆ →
+</button>
 
     </main>
 
