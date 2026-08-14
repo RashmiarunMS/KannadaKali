@@ -72,3 +72,28 @@ button {
 
     cursor: pointer;
 }
+
+.question-area h2 {
+    font-size: 32px;
+    margin: 10px 0 25px;
+}
+
+.answer-word {
+    padding: 12px 20px;
+
+    border: none;
+    border-radius: 12px;
+
+    background: #ffe082;
+
+    font-family: inherit;
+    font-size: 19px;
+    font-weight: 600;
+
+    cursor: pointer;
+}
+
+.answer-word.selected {
+    background: #9be7a5;
+    transform: scale(1.05);
+}
