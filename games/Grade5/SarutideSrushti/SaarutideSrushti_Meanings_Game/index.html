@@ -1,0 +1,73 @@
+<!doctype html>
+<html lang="kn">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>ಸಾರುತಿದೆ ಸೃಷ್ಟಿ – ಪದಗಳ ಅರ್ಥ</title>
+<style>
+*{box-sizing:border-box} body{margin:0;min-height:100vh;display:flex;align-items:center;justify-content:center;padding:18px;background:linear-gradient(135deg,#fff8e7,#eef7ff);font-family:"Noto Sans Kannada","Nirmala UI",sans-serif;color:#263238}
+.game{width:min(720px,100%);background:#fff;border-radius:24px;padding:28px;box-shadow:0 10px 35px #0002}
+h1{text-align:center;margin:0 0 6px;font-size:clamp(26px,6vw,40px)} .sub{text-align:center;color:#607d8b;margin:0 0 22px}
+.top{display:flex;justify-content:space-between;gap:8px;margin-bottom:16px;font-weight:700}.pill{background:#f1f5f9;border-radius:20px;padding:8px 13px}
+.bar{height:10px;background:#e8eef2;border-radius:10px;overflow:hidden;margin-bottom:24px}.fill{height:100%;width:0;background:#5c6bc0;transition:.3s}
+.label{text-align:center;color:#607d8b}.wordbox{text-align:center;background:#f7f2ff;border:2px solid #ddd0ff;border-radius:20px;padding:24px;margin:10px 0 20px}.word{font-size:clamp(34px,8vw,54px);font-weight:800;color:#4a2c82}
+.options{display:grid;grid-template-columns:1fr 1fr;gap:12px}.option{border:2px solid #dce5ea;background:#fff;border-radius:16px;padding:15px;min-height:70px;font-family:inherit;font-size:20px;cursor:pointer}.option:hover:not(:disabled){border-color:#90caf9;background:#f5fbff}.correct{background:#e8f5e9!important;border-color:#66bb6a!important;color:#1b5e20}.wrong{background:#ffebee!important;border-color:#ef5350!important;color:#b71c1c}
+.feedback{text-align:center;min-height:55px;padding:14px 4px;font-weight:700;font-size:18px}.next,.restart{display:block;margin:5px auto 0;border:0;border-radius:14px;padding:13px 24px;font-family:inherit;font-size:18px;font-weight:800;cursor:pointer}.next{background:#5c6bc0;color:#fff}.next:disabled{opacity:.45;cursor:not-allowed}.restart{background:#263238;color:#fff}.end{text-align:center;padding:20px 5px}.score{font-size:44px;font-weight:900;color:#4a2c82}.note{color:#607d8b;line-height:1.6}
+@media(max-width:560px){.game{padding:20px 14px}.options{grid-template-columns:1fr}}
+</style>
+</head>
+<body>
+<main class="game">
+<h1>ಸಾರುತಿದೆ ಸೃಷ್ಟಿ 🌿</h1>
+<p class="sub">ಪದದ ಸರಳ ಅರ್ಥವನ್ನು ಹುಡುಕಿ</p>
+
+<section id="play">
+<div class="top"><span class="pill" id="qno"></span><span class="pill">⭐ ಅಂಕ: <span id="score">0</span></span></div>
+<div class="bar"><div class="fill" id="fill"></div></div>
+<div class="label">ಈ ಪದದ ಸರಳ ಅರ್ಥ ಯಾವುದು?</div>
+<div class="wordbox"><div class="word" id="word"></div></div>
+<div class="options" id="options"></div>
+<div class="feedback" id="feedback"></div>
+<button class="next" id="next" disabled>ಮುಂದಿನ ಪ್ರಶ್ನೆ →</button>
+</section>
+
+<section class="end" id="end" hidden>
+<h2>🎉 ಆಟ ಮುಗಿಯಿತು!</h2><div class="score"><span id="final">0</span> / 15</div>
+<p id="message"></p><p class="note">ಮತ್ತೆ ಆಡಿದಾಗ ಪ್ರಶ್ನೆಗಳ ಮತ್ತು ಆಯ್ಕೆಗಳ ಕ್ರಮ ಬದಲಾಗುತ್ತದೆ.</p>
+<button class="restart" id="restart">ಮತ್ತೊಮ್ಮೆ ಆಡು ↻</button>
+</section>
+</main>
+
+<script>
+const words=[
+["ಉಷೆ","ಅರುಣೋದಯ"],["ಕಂದ","ಗೆಡ್ಡೆ"],["ಕೆನೆಮೊಸರು","ಕೆನೆ ಸಹಿತವಾದ ಮೊಸರು"],
+["ಛವಿ","ಹೊಳಪು / ಕಾಂತಿ / ಬಣ್ಣ"],["ಜ್ಯೋತಿ","ಬೆಳಕು / ದೀಪ"],["ತಾರೆ","ನಕ್ಷತ್ರ"],
+["ನಯನ","ಕಣ್ಣು"],["ಭವ್ಯ","ಉನ್ನತವಾದ"],["ರಸಗುಬ್ಬು","ರಸಪೂರಿತವಾದ ಕಬ್ಬು"],
+["ರನ್ನ","ರತ್ನ"],["ಸವಿ","ರುಚಿ / ಸಿಹಿ"],["ಸೃಷ್ಟಿ","ಪ್ರಕೃತಿ / ರಚನೆ"],
+["ಸಾರು","ಘೋಷಿಸು / ಹೇಳು / ಪ್ರಕಟಪಡಿಸು"],["ಹಾಲ್ದೆನೆ","ಎಳೆ ಕಾಳುಗಳಿರುವ ತೆನೆ"],["ಹೊಂಬಣ್ಣ","ಬಂಗಾರದ ಬಣ್ಣ"]
+];
+
+let qs=[],i=0,score=0,answered=false;
+const $=id=>document.getElementById(id);
+function shuffle(a){return [...a].sort(()=>Math.random()-.5)}
+function start(){qs=shuffle(words);i=0;score=0;$("score").textContent=0;$("play").hidden=false;$("end").hidden=true;show()}
+function show(){
+ answered=false;let [w,m]=qs[i];$("qno").textContent=`ಪ್ರಶ್ನೆ ${i+1} / ${qs.length}`;$("word").textContent=w;$("feedback").textContent="";$("next").disabled=true;$("fill").style.width=(i/qs.length*100)+"%";$("options").innerHTML="";
+ let opts=shuffle([m,...shuffle(words.filter(x=>x[1]!==m)).slice(0,3).map(x=>x[1])]);
+ opts.forEach(x=>{let b=document.createElement("button");b.className="option";b.textContent=x;b.onclick=()=>answer(b,x,m);$("options").appendChild(b)})
+}
+function answer(btn,selected,correct){
+ if(answered)return;answered=true;let bs=[...document.querySelectorAll(".option")];bs.forEach(b=>b.disabled=true);
+ if(selected===correct){btn.classList.add("correct");$("feedback").textContent="✅ ಸರಿಯಾಗಿದೆ!";score++;$("score").textContent=score}
+ else{btn.classList.add("wrong");let c=bs.find(b=>b.textContent===correct);if(c)c.classList.add("correct");$("feedback").textContent=`💡 ಸರಿಯಾದ ಅರ್ಥ: ${correct}`}
+ $("next").disabled=false;$("fill").style.width=((i+1)/qs.length*100)+"%"
+}
+$("next").onclick=()=>{i++;i<qs.length?show():finish()}
+function finish(){
+ $("play").hidden=true;$("end").hidden=false;$("final").textContent=score;
+ $("message").textContent=score===15?"🌟 ಅದ್ಭುತ! ಎಲ್ಲಾ ಪದಗಳ ಅರ್ಥವೂ ಗೊತ್ತು!":score>=12?"👏 ಬಹಳ ಚೆನ್ನಾಗಿದೆ!":score>=9?"😊 ಚೆನ್ನಾಗಿದೆ! ತಪ್ಪಾದ ಪದಗಳನ್ನು ಮತ್ತೊಮ್ಮೆ ಅಭ್ಯಾಸ ಮಾಡೋಣ.":"🌱 ಪರವಾಗಿಲ್ಲ! ಮತ್ತೆ ಆಡಿ — ಪ್ರತಿ ಬಾರಿ ಇನ್ನಷ್ಟು ನೆನಪಾಗುತ್ತದೆ."
+}
+$("restart").onclick=start;start();
+</script>
+</body>
+</html>
