@@ -1,0 +1,1 @@
+Second game for page 4: use ಸಾರು, ಸೃಷ್ಟಿ, ಸವಿ, ಹೊಂಬಣ್ಣ, ಛವಿ in sentences.
